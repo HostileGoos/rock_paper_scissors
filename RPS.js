@@ -2,6 +2,10 @@ const rockButton = document.querySelector('#btnRock');
 const paperButton = document.querySelector('#btnPaper');
 const scissorsButton = document.querySelector('#btnScissors');
 const resultDiv = document.querySelector('#result');
+const scoreDiv = document.querySelector('#score');
+
+let userScore = 0;
+let computerScore = 0;
 
 rockButton.addEventListener('click', () => playGame('rock'));
 paperButton.addEventListener('click', () => playGame('paper'));
@@ -22,39 +26,48 @@ const getComputerChoice = () => {
             return"scissors";
     } 
 };
-const determineWinner = (userChoice,computerChoice) => {
+const determineWinner = (userChoice, computerChoice) => {
     if (userChoice === computerChoice) {
         return "The game was a tie";
-    }
-    if (userChoice === "rock") {
-        if(computerChoice === "paper")
-            return "Computer won";
-    }   else {
-            return "User won";
-    }
-    if (userChoice === "paper") {
-        if(computerChoice === "scissors" )
-            return "Computer won";
-    }   else {
-            return "User won";
-    }
-    if (userChoice === "scissors") {
-        if(computerChoice === "rock")
-            return "Computer won";
-    }   else {
-            return"User won";
+    } else if (
+        (userChoice === "rock" && computerChoice === "scissors") ||
+        (userChoice === "paper" && computerChoice === "rock") ||
+        (userChoice === "scissors" && computerChoice === "paper")
+    ) {
+        return "User won";
+    } else {
+        return "Computer won";
     }
 };
 function playGame(playerSelection) {
     let userChoice = getUserChoice(playerSelection);
     let computerChoice = getComputerChoice();
     let result = determineWinner(userChoice, computerChoice);
-    if (result === "The game was a tie") {
-        alert("It's a tie!");
-    } else if (result === "User won"){
-        alert("You won");
+    
+    if (result === "User won") {
+        userScore++;
     } else if (result === "Computer won") {
-        alert("Computer won!");
+        computerScore++;
     }
 
-};
+    if (result === "The game was a tie") {
+    } else if (result === "User won"){
+    } else if (result === "Computer won") {
+    }
+    
+    scoreDiv.textContent = `User: ${userScore}, Computer: ${computerScore}`;
+    resultDiv.textContent = result;
+
+    if (userScore >= 5) {
+        resultDiv.textContent = "User won!";
+        disableButtons();
+    } else if (computerScore >= 5) {
+        resultDiv.textContent = "Computer won!";
+        disableButtons();
+    }
+}
+function disableButtons() {
+    rockButton.disabled = true;
+    paperButton.disabled = true;
+    scissorsButton.disabled = true;
+}

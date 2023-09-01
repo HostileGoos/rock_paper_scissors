@@ -1,0 +1,21 @@
+.container{
+    text-align: center;
+}
+.button{
+    color: black;
+    border: 1px solid black;
+    padding: 15px 32px;
+    display: inline-block;
+    
+
+}
+
+#btnRock {
+    background-color: grey;
+}
+#btnPaper {
+    background-color: beige;
+}
+#btnScissors {
+    background-color: steelblue;
+}
