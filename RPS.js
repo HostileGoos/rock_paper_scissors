@@ -1,10 +1,14 @@
-const getUserChoice = () => {
-    let userInput = prompt("Select your action").toLowerCase();
-    if (userInput === "rock" || "paper" || "scissors") {
-        return userInput;
-    } else {
-        console.log("Wrong input. Type in either rock,paper or scissors");
-    }
+const rockButton = document.querySelector('#btnRock');
+const paperButton = document.querySelector('#btnPaper');
+const scissorsButton = document.querySelector('#btnScissors');
+const resultDiv = document.querySelector('#result');
+
+rockButton.addEventListener('click', () => playGame('rock'));
+paperButton.addEventListener('click', () => playGame('paper'));
+scissorsButton.addEventListener('click', () => playGame('scissors'));
+
+const getUserChoice = (playerSelection) => {
+    return playerSelection;
 };
 
 const getComputerChoice = () => {
@@ -41,17 +45,16 @@ const determineWinner = (userChoice,computerChoice) => {
             return"User won";
     }
 };
-function playGame() {
-    let userChoice = getUserChoice("rock");
+function playGame(playerSelection) {
+    let userChoice = getUserChoice(playerSelection);
     let computerChoice = getComputerChoice();
-    console.log(userChoice,computerChoice);
-    console.log(determineWinner(userChoice,computerChoice));
-}
+    let result = determineWinner(userChoice, computerChoice);
+    if (result === "The game was a tie") {
+        alert("It's a tie!");
+    } else if (result === "User won"){
+        alert("You won");
+    } else if (result === "Computer won") {
+        alert("Computer won!");
+    }
 
-
-let games = 0;
-while (games < 5){
-    playGame();
-    games++;
-    console.log(games);
-}
+};
